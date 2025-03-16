@@ -35,9 +35,20 @@ class MotivoTransaccionSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class TransaccionesSerializer(serializers.ModelSerializer):
+    nombre_cliente = serializers.CharField(source='idCliente.nombreCliente', read_only=True)
+    nombre_agencia = serializers.CharField(source='idAgencia.nombreAgencia', read_only=True)
+    nombre_motivo_transaccion = serializers.CharField(source='idMotivoTransaccion.nombreMotivoTransaccion', read_only=True)
+
     class Meta:
         model = Transacciones
-        fields = '__all__'
+        fields = [
+            'id',
+            'fechaTransaccion',
+            'montoTransaccion',
+            'nombre_cliente',  # Solo el nombre del cliente
+            'nombre_agencia',  # Solo el nombre de la agencia
+            'nombre_motivo_transaccion',  # Solo el nombre del motivo
+        ]
 
 class UsuariosSerializer(serializers.ModelSerializer):
     class Meta:
